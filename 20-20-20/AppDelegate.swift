@@ -32,6 +32,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         NSApp.setActivationPolicy(.accessory)
         initializeStatusBar()
+        startTimer()
     }
     
     func initializeStatusBar() {
@@ -66,13 +67,33 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc func turnOnNotifications() {
         notify = true
         updateStatusBar()
-        print("ON")
     }
     
     @objc func turnOffNotifications() {
         notify = false
         updateStatusBar()
-        print("OFF")
+    }
+    
+    func startTimer() {
+        // Wait for twenty minute intervals
+        Timer.scheduledTimer(withTimeInterval: 1200, repeats: true) { timer in
+            if (self.notify) {
+                self.sendNotification()
+            }
+        }
+    }
+    
+    func sendNotification() {
+        let notification = NSUserNotification()
+        notification.identifier = "notify20"
+        notification.title = "20-20-20 Rule"
+        notification.subtitle = "Look at something 20 feet away"
+        notification.informativeText = "for 20 seconds."
+        notification.soundName = NSUserNotificationDefaultSoundName
+        notification.hasActionButton = false
+        
+        let notificationCenter = NSUserNotificationCenter.default
+        notificationCenter.deliver(notification)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
