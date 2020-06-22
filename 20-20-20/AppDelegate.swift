@@ -56,6 +56,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             withTitle: "Turn OFF Notifications",
             action: #selector(AppDelegate.turnOffNotifications),
             keyEquivalent: "")
+        
+        statusBarMenu.addItem(
+            withTitle: "Quit",
+            action: #selector(AppDelegate.exitApp),
+            keyEquivalent: "")
     }
     
     func updateStatusBar() {
@@ -72,6 +77,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc func turnOffNotifications() {
         notify = false
         updateStatusBar()
+    }
+    
+    @objc func exitApp() {
+        NSApplication.shared.terminate(self)
     }
     
     func startTimer() {
