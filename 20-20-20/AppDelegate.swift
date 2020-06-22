@@ -95,7 +95,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func sendNotification() {
         let notification = NSUserNotification()
         notification.identifier = "notify20"
-        notification.title = "20-20-20 Rule"
+        notification.title = "20-20-20 (Expires in 20 secs)"
         notification.subtitle = "Look at something 20 feet away"
         notification.informativeText = "for 20 seconds."
         notification.soundName = NSUserNotificationDefaultSoundName
@@ -103,8 +103,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let notificationCenter = NSUserNotificationCenter.default
         notificationCenter.deliver(notification)
-    }
 
+        // Display notification for twenty seconds
+        notificationCenter.perform(#selector(NSUserNotificationCenter.removeDeliveredNotification(_:)),
+                                   with: notification,
+                                   afterDelay: (20))
+    }
+    
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
