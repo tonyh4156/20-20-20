@@ -15,6 +15,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     //var window: NSWindow!
     var statusBarItem: NSStatusItem!
     var notify = UserDefaults.standard.bool(forKey: "notifyStatus")
+    let twentySecs = 20.0
+    let twentyMins = 1200.0
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Create the SwiftUI view that provides the window contents.
@@ -85,7 +87,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func startTimer() {
         // Wait for twenty minute intervals
-        Timer.scheduledTimer(withTimeInterval: 1200, repeats: true) { timer in
+        Timer.scheduledTimer(withTimeInterval: twentyMins, repeats: true) { timer in
             if (self.notify) {
                 self.sendNotification()
             }
@@ -107,7 +109,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Display notification for twenty seconds
         notificationCenter.perform(#selector(NSUserNotificationCenter.removeDeliveredNotification(_:)),
                                    with: notification,
-                                   afterDelay: (20))
+                                   afterDelay: (twentySecs))
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
