@@ -135,7 +135,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc func stopTimer() {
-        timer.invalidate()
+        if (timer != nil) {
+            timer.invalidate()
+        }
     }
     
     func sendNotification() {
