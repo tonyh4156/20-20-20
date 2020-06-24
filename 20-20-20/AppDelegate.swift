@@ -19,6 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var notify = UserDefaults.standard.integer(forKey: "notifyStatus")  // uninitialized = 0, ON = 1, OFF = -1
     let twentySecs = 20.0
     let twentyMins = 60.0
+    let appVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Create the SwiftUI view that provides the window contents.
@@ -78,6 +79,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             action: #selector(AppDelegate.turnOffNotifications),
             keyEquivalent: "")
         
+        statusBarMenu.addItem(NSMenuItem.separator())
+        
+        statusBarMenu.addItem(
+            withTitle: "Version: " + appVersion,
+            action: nil,
+            keyEquivalent: "")
+        
+        statusBarMenu.addItem(
+            withTitle: "Check for Updates",
+            action: #selector(AppDelegate.openWebsite),
+            keyEquivalent: "")
+        
+        statusBarMenu.addItem(NSMenuItem.separator())
+        
         statusBarMenu.addItem(
             withTitle: "Quit",
             action: #selector(AppDelegate.exitApp),
@@ -100,6 +115,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         notify = -1
         updateStatusBar()
         stopTimer()
+    }
+    
+    @objc func openWebsite() {
+        
     }
     
     @objc func exitApp() {
