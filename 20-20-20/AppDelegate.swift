@@ -106,19 +106,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc func turnOnNotifications() {
-        notify = 1
-        updateStatusBar()
-        startTimer()
+        if (notify != 1) {
+            notify = 1
+            updateStatusBar()
+            startTimer()
+        }
     }
     
     @objc func turnOffNotifications() {
-        notify = -1
-        updateStatusBar()
-        stopTimer()
+        if (notify != -1) {
+            notify = -1
+            updateStatusBar()
+            stopTimer()
+        }
     }
     
     @objc func openWebsite() {
-        
+        //Todo
     }
     
     @objc func exitApp() {
