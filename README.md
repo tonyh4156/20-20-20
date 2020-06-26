@@ -6,7 +6,7 @@ In today's society, many people spend a lot of time working with their computers
 -----------------
 ### MacOS
 ---------
-Step 1: Download the [20-20-20.zip](https://github.com/tonyh4156/20-20-20/releases/) from Assets and once finished, drag the file into the Applications folder
+Step 1: Download the latest [20-20-20.zip](https://github.com/tonyh4156/20-20-20/releases/) from Assets and once finished, drag the file into the Applications folder
 
 Step 2: Locate the app called 20-20-20 and open it. If it doesn't open, go to step 3. Otherwise, go to step 4.
 
