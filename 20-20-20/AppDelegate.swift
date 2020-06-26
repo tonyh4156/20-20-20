@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var timer: Timer!
     var notify = UserDefaults.standard.integer(forKey: "notifyStatus")  // uninitialized = 0, ON = 1, OFF = -1
     let twentySecs = 20.0
-    let twentyMins = 60.0
+    let twentyMins = 1200.0
     let appVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -122,7 +122,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc func openWebsite() {
-        //Todo
+        let url = URL(string: "https://tonyh4156.github.io/20-20-20.github.io/")!
+        if NSWorkspace.shared.open(url) {
+            print("Successfully opened homepage!")
+        }
     }
     
     @objc func exitApp() {
