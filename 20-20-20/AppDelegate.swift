@@ -88,7 +88,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         statusBarMenu.addItem(
             withTitle: "Check for Updates",
-            action: #selector(AppDelegate.openWebsite),
+            action: #selector(AppDelegate.openHomepage),
             keyEquivalent: "")
         
         statusBarMenu.addItem(NSMenuItem.separator())
@@ -121,7 +121,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    @objc func openWebsite() {
+    @objc func openHomepage() {
         let url = URL(string: "https://tonyh4156.github.io/20-20-20.github.io/")!
         if NSWorkspace.shared.open(url) {
             print("Successfully opened homepage!")
