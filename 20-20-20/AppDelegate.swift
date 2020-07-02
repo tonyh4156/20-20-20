@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var timer: Timer!
     var notify = UserDefaults.standard.integer(forKey: "notifyStatus")  // uninitialized = 0, ON = 1, OFF = -1
     let twentySecs = 20.0
-    let twentyMins = 1200.0
+    let twentyMins = 60.0
     let appVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -163,6 +163,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         notificationCenter.perform(#selector(NSUserNotificationCenter.removeDeliveredNotification(_:)),
                                    with: notification,
                                    afterDelay: (twentySecs))
+    
+        perform(#selector(playSound), with: nil, afterDelay: twentySecs)
+    }
+    
+    @objc func playSound() {
+        NSSound(named: "pieceOfCake")?.play()
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
