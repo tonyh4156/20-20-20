@@ -91,6 +91,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             action: #selector(AppDelegate.openHomepage),
             keyEquivalent: "")
         
+        statusBarMenu.addItem(
+            withTitle: "Give Feedback",
+            action: #selector(AppDelegate.openFeedback),
+            keyEquivalent: "")
+        
         statusBarMenu.addItem(NSMenuItem.separator())
         
         statusBarMenu.addItem(
@@ -125,6 +130,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let url = URL(string: "https://tonyh4156.github.io/20-20-20.github.io/")!
         if NSWorkspace.shared.open(url) {
             print("Successfully opened homepage!")
+        }
+    }
+    
+    @objc func openFeedback() {
+        let url = URL(string: "https://docs.google.com/forms/d/e/1FAIpQLSfXnoCmppLdI-kttHYPE6bO4JoXW7nF6ZG2xTw6wPwddlHFCA/viewform")!
+        if NSWorkspace.shared.open(url) {
+            print("Successfully opened feedback form!")
         }
     }
     
