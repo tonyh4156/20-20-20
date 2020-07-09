@@ -176,7 +176,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                    with: notification,
                                    afterDelay: (twentySecs))
     
-        perform(#selector(playSound), with: nil, afterDelay: twentySecs)
+        if (notify != 0) {
+            perform(#selector(playSound), with: nil, afterDelay: twentySecs)
+        }
     }
     
     @objc func playSound() {
