@@ -11,7 +11,7 @@ import SwiftUI
 import UserNotifications
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate {
 
     //var window: NSWindow!
     var statusBarItem: NSStatusItem!
@@ -37,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let notificationCenter = NSWorkspace.shared.notificationCenter
         notificationCenter.addObserver(self, selector: #selector(stopTimer), name: NSWorkspace.willSleepNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(checkStatus), name: NSWorkspace.didWakeNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(checkNotifyStatus), name: NSWorkspace.didWakeNotification, object: nil)
         
         NSApp.setActivationPolicy(.accessory)
         initializeStatusBar()
@@ -48,10 +48,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             notify = 1
         }
         
-        checkStatus()
+        checkNotifyStatus()
     }
     
-    @objc func checkStatus() {
+    @objc func checkNotifyStatus() {
         if (notify == 1) {
             startTimer()
         }
@@ -175,7 +175,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         notificationCenter.perform(#selector(NSUserNotificationCenter.removeDeliveredNotification(_:)),
                                    with: notification,
                                    afterDelay: (twentySecs))
-    
+                                        
         if (notify != 0) {
             perform(#selector(playSound), with: nil, afterDelay: twentySecs)
         }
