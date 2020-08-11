@@ -40,7 +40,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         notificationCenter.addObserver(self, selector: #selector(checkNotifyStatus), name: NSWorkspace.didWakeNotification, object: nil)
         
         NSApp.setActivationPolicy(.accessory)
-        initializeStatusBar()
         
         // Ask first time user for notification permissions
         if (notify == 0) {
@@ -48,6 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
             notify = 1
         }
         
+        initializeStatusBar()
         checkNotifyStatus()
     }
     
