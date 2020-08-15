@@ -6,7 +6,7 @@ In today's society, many people spend a lot of time working with their computers
 -----------------
 ### MacOS
 ---------
-**Step 0:** If updating from a previous version, uninstall 20-20-20 by moving it from the Applications folder to Trash. Then, go to step 1. 
+**Step 0:** If updating from a previous version, uninstall 20-20-20 by quitting the app and moving it from the Applications folder to Trash. Then, go to step 1. 
 
 **Step 1:** Download the latest [20-20-20.zip](https://github.com/tonyh4156/20-20-20/releases/) from Assets and once finished, uncompress the zip file, and drag the app into the Applications folder
 
