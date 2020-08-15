@@ -25,7 +25,3 @@ Coming soon!
 ## Feedback
 -----------
 [Link](https://forms.gle/QHAoygp3P2bHDZMx5)
-
-## Donations
-------------
-TBD.
