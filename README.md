@@ -8,7 +8,7 @@ In today's society, many people spend a lot of time working with their computers
 ---------
 **Step 0:** If updating from a previous version, uninstall 20-20-20 by moving it from the Applications folder to Trash. Then, go to step 1. 
 
-**Step 1:** Download the latest [20-20-20.zip](https://github.com/tonyh4156/20-20-20/releases/) from Assets and once finished, drag the file into the Applications folder
+**Step 1:** Download the latest [20-20-20.zip](https://github.com/tonyh4156/20-20-20/releases/) from Assets and once finished, uncompress the zip file, and drag the app into the Applications folder
 
 **Step 2:** Locate the app called 20-20-20 and open it. If it doesn't open, go to step 3. Otherwise, go to step 4.
 
@@ -25,7 +25,3 @@ Coming soon!
 ## Feedback
 -----------
 [Link](https://forms.gle/QHAoygp3P2bHDZMx5)
-
-## Donations
-------------
-TBD.
