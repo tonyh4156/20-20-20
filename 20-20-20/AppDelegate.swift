@@ -26,7 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         // Create the SwiftUI view that provides the window contents.
         /*let contentView = ContentView()
 
-        // Create the window and set the content view. 
+        // Create the window and set the content view.
         window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
             styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
