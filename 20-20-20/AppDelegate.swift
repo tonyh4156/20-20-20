@@ -16,7 +16,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     //var window: NSWindow!
     var statusBarItem: NSStatusItem!
     var timer: Timer!
-    var notify = UserDefaults.standard.integer(forKey: "notifyStatus")  // uninitialized = 0, ON = 1, OFF = -1
+    var notifyStatus = UserDefaults.standard.integer(forKey: "notifyStatus")  // uninitialized = 0, ON = 1, OFF = -1
+    var soundStatus = UserDefaults.standard.integer(forKey: "soundStatus")  // uninitialized = 0, ON = 1, OFF = -1
     let twentySecs = 20.0
     let twentyMins = 1200.0
     let appVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
@@ -35,6 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)*/
         
+        // Handle notifications depending on sleep status
         let notificationCenter = NSWorkspace.shared.notificationCenter
         notificationCenter.addObserver(self, selector: #selector(stopTimer), name: NSWorkspace.willSleepNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(checkNotifyStatus), name: NSWorkspace.didWakeNotification, object: nil)
@@ -42,9 +44,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         NSApp.setActivationPolicy(.accessory)
         
         // Ask first time user for notification permissions
-        if (notify == 0) {
+        if (notifyStatus == 0) {
             sendNotification()
-            notify = 1
+            notifyStatus = 1
+        }
+        
+        if (soundStatus == 0) {
+            soundStatus = 1
         }
         
         initializeStatusBar()
@@ -52,7 +58,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     }
     
     @objc func checkNotifyStatus() {
-        if (notify == 1) {
+        if (notifyStatus == 1) {
             startTimer()
         }
     }
@@ -65,18 +71,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         statusBarItem.menu = statusBarMenu
         
         statusBarMenu.addItem(
-            withTitle: ((notify == 1) ? "Notifications ON" : "Notifications OFF"),
+            withTitle: ((notifyStatus == 1) ? "Notifications ON" : "Notifications OFF"),
             action: nil,
             keyEquivalent: "")
         
         statusBarMenu.addItem(
-            withTitle: "Turn ON Notifications",
-            action: #selector(AppDelegate.turnOnNotifications),
+            withTitle: ((notifyStatus == 1) ? "Turn OFF Notifications" : "Turn ON Notifications"),
+            action: #selector(AppDelegate.updateNotifications),
             keyEquivalent: "")
         
         statusBarMenu.addItem(
-            withTitle: "Turn OFF Notifications",
-            action: #selector(AppDelegate.turnOffNotifications),
+            withTitle: ((soundStatus == 1) ? "Disable Sounds" : "Enable Sounds"),
+            action: #selector(AppDelegate.updateSounds),
             keyEquivalent: "")
         
         statusBarMenu.addItem(NSMenuItem.separator())
@@ -88,7 +94,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         
         statusBarMenu.addItem(
             withTitle: "Check for Updates",
-            action: #selector(AppDelegate.openHomepage),
+            action: #selector(AppDelegate.openReleases),
             keyEquivalent: "")
         
         statusBarMenu.addItem(
@@ -104,38 +110,46 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
             keyEquivalent: "")
     }
     
-    func updateStatusBar() {
-        let item = statusBarItem.menu?.item(at: 0)
-        item?.title = ((notify == 1) ? "Notifications ON" : "Notifications OFF")
-        UserDefaults.standard.set(notify, forKey: "notifyStatus")
-    }
-    
-    @objc func turnOnNotifications() {
-        if (notify != 1) {
-            notify = 1
-            updateStatusBar()
-            startTimer()
-        }
-    }
-    
-    @objc func turnOffNotifications() {
-        if (notify != -1) {
-            notify = -1
-            updateStatusBar()
+    @objc func updateNotifications() {
+        if (notifyStatus == 1) {
             stopTimer()
+            notifyStatus = -1
+            updateStatusBar()
+            UserDefaults.standard.set(notifyStatus, forKey: "notifyStatus")
+        }
+        else {
+            startTimer()
+            notifyStatus = 1
+            updateStatusBar()
+            UserDefaults.standard.set(notifyStatus, forKey: "notifyStatus")
         }
     }
     
-    @objc func openHomepage() {
-        let url = URL(string: "https://tonyh4156.github.io/20-20-20.github.io/")!
-        if NSWorkspace.shared.open(url) {
-            print("Successfully opened homepage!")
+    func updateStatusBar() {
+        let statusItem = statusBarItem.menu?.item(at: 0)
+        statusItem?.title = ((notifyStatus == 1) ? "Notifications ON" : "Notifications OFF")
+        let notifyOptionItem = statusBarItem.menu?.item(at: 1)
+        notifyOptionItem?.title = ((notifyStatus == 1) ? "Turn OFF Notifications" : "Turn ON Notifications")
+        let soundOptionItem = statusBarItem.menu?.item(at: 2)
+        soundOptionItem?.title = ((soundStatus == 1) ? "Disable Sounds" : "Enable Sounds")
+    }
+    
+    @objc func updateSounds() {
+        soundStatus = (soundStatus == 1) ? -1 : 1
+        updateStatusBar()
+        UserDefaults.standard.set(soundStatus, forKey: "soundStatus")
+    }
+    
+    @objc func openReleases() {
+        let url = URL(string: "https://github.com/tonyh4156/20-20-20/releases")!
+        if (NSWorkspace.shared.open(url)) {
+            print("Successfully opened github releases!")
         }
     }
     
     @objc func openFeedback() {
         let url = URL(string: "https://docs.google.com/forms/d/e/1FAIpQLSfXnoCmppLdI-kttHYPE6bO4JoXW7nF6ZG2xTw6wPwddlHFCA/viewform")!
-        if NSWorkspace.shared.open(url) {
+        if (NSWorkspace.shared.open(url)) {
             print("Successfully opened feedback form!")
         }
     }
@@ -147,7 +161,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     @objc func startTimer() {
         // Wait for twenty minute intervals
         timer = Timer.scheduledTimer(withTimeInterval: twentyMins, repeats: true) { t in
-            if (self.notify == 1) {
+            if (self.notifyStatus == 1) {
                 self.sendNotification()
             }
         }
@@ -165,7 +179,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         notification.title = "20-20-20 (Expires in 20 secs)"
         notification.subtitle = "Look at something 20 feet away"
         notification.informativeText = "for 20 seconds."
-        notification.soundName = NSUserNotificationDefaultSoundName
+        notification.soundName = (soundStatus == 1) ? NSUserNotificationDefaultSoundName : nil
         notification.hasActionButton = false
         
         let notificationCenter = NSUserNotificationCenter.default
@@ -176,7 +190,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
                                    with: notification,
                                    afterDelay: (twentySecs))
                                         
-        if (notify != 0) {
+        if (soundStatus == 1) {
             perform(#selector(playSound), with: nil, afterDelay: twentySecs)
         }
     }
