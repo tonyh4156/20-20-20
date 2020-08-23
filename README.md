@@ -22,6 +22,6 @@ In today's society, many people spend a lot of time working with their computers
 -----------
 Coming soon!
 
-## Feedback
+## Feedback/Report a Bug
 -----------
 [Link](https://forms.gle/QHAoygp3P2bHDZMx5)
