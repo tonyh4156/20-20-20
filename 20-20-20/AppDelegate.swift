@@ -155,6 +155,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     }
     
     @objc func exitApp() {
+        stopTimer()
         NSApplication.shared.terminate(self)
     }
     
@@ -201,6 +202,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
+        exitApp()
     }
 
 }
