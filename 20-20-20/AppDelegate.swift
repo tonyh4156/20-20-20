@@ -50,10 +50,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         if (notifyStatus == 0) {
             sendNotification()
             notifyStatus = 1
+            UserDefaults.standard.set(notifyStatus, forKey: "notifyStatus")
         }
         
         if (soundStatus == 0) {
             soundStatus = 1
+            UserDefaults.standard.set(soundStatus, forKey: "soundStatus")
         }
         
         initializeStatusBar()
