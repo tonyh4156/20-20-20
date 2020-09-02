@@ -16,8 +16,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     //var window: NSWindow!
     var statusBarItem: NSStatusItem!
     var timer: Timer!
-    var notifyStatus = UserDefaults.standard.integer(forKey: "notifyStatus")  // uninitialized = 0, ON = 1, OFF = -1
-    var soundStatus = UserDefaults.standard.integer(forKey: "soundStatus")  // uninitialized = 0, ON = 1, OFF = -1
+    var notifyStatus: Int!
+    var soundStatus: Int!
     let twentySecs = 20.0
     let twentyMins = 1200.0
     let appVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
@@ -42,6 +42,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         notificationCenter.addObserver(self, selector: #selector(checkNotifyStatus), name: NSWorkspace.didWakeNotification, object: nil)
         
         NSApp.setActivationPolicy(.accessory)
+        
+        notifyStatus = UserDefaults.standard.integer(forKey: "notifyStatus")  // uninitialized = 0, ON = 1, OFF = -1
+        soundStatus = UserDefaults.standard.integer(forKey: "soundStatus")  // uninitialized = 0, ON = 1, OFF = -1
         
         // Ask first time user for notification permissions
         if (notifyStatus == 0) {
