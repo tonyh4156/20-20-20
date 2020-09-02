@@ -12,7 +12,7 @@ In today's society, many people spend a lot of time working with their computers
 
 **Step 2:** Locate the app called 20-20-20 and open it. If it doesn't open, go to step 3. Otherwise, go to step 4.
 
-**Step 3:** Go to System Preferences -> Security & Privacy -> General -> Open Anyway
+**Step 3:** Go to System Preferences -> Security & Privacy -> General -> Open Anyway. Then, try to open the app again.
 
 **Step 4:** Accept the notification permissions if prompted
 
